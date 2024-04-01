@@ -1,0 +1,39 @@
+default_language_version:
+  python: python3.10
+# exclude: |
+#   (?x)^(
+#     src/dataloaders.*|
+#     src/utils.py|
+#     src/model/.*|
+#   )
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude_types: [text] # exclude golden files
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: check-case-conflict
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-yaml
+        args: [--unsafe] # Instead of loading the files, simply parse them for syntax
+      - id: mixed-line-ending
+
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --show-fixes, --unsafe-fixes]
+
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: "v1.9.0" # Use the sha / tag you want to point at
+  #   hooks:
+  #     - id: mypy
+
+  # - repo: https://github.com/kynan/nbstripout
+  #   rev: 0.7.1
+  #   hooks:
+  #     - id: nbstripout

@@ -1,0 +1,35 @@
+{
+    "image": "deepsvg/cuda:12.2.2-cudnn8-runtime-ubuntu22.04",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                }
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-toolsai.jupyter",
+                "njpwerner.autodocstring",
+                "mutantdino.resourcemonitor",
+                "mhutchie.git-graph",
+                "charliermarsh.ruff",
+                "tamasfe.even-better-toml",
+                "redhat.vscode-yaml",
+                "redhat.vscode-xml",
+                "mechatroner.rainbow-csv",
+                "PascalReitermann93.vscode-yaml-sort"
+            ]
+        }
+    },
+    "runArgs": [
+        "--gpus", "all",
+        "--shm-size", "24gb",
+        "--network=host"
+    ],
+    "mounts": [
+        "source=/data/,target=/data/,type=bind,consistency=cached"
+    ]
+}

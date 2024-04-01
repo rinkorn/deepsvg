@@ -1,6 +1,49 @@
-**/.DS_Store
-__pycache__/
+# py files
+*__pycache__/*
+*.pyc
+*.DS_Store
+
+# env configuraion
+env/
+venv/
+.env/
+.venv/
+
+# VSCode
+.vscode/
+
+# Pycharm
 .idea/
+
+# file with private variables
+.env
+.env.*
+.env-*
+
+# source distr
+dist/
+
+# caches
+.ruff_cache/
+
+# models
+models/
+
+# mlruns
+mlruns/
+
+# logs
 logs/
-*.mp4
+.logs/
+
+# pytest
+.coverage
+
+# data
+data/
+dataset/
 gui_data/
+
+# media
+*.mp4
+
