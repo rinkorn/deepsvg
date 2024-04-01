@@ -2,8 +2,8 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-from configs.deepsvg.hierarchical_ordered import Config
 from deepsvg import utils
+from deepsvg.configs.hierarchical_ordered import ExperimentConfig
 from deepsvg.difflib.tensor import SVGTensor
 from deepsvg.svglib.geom import Bbox
 from deepsvg.svglib.svg import SVG
@@ -16,7 +16,7 @@ from .utils import easein_easeout
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 pretrained_path = "./pretrained/hierarchical_ordered.pth.tar"
 
-cfg = Config()
+cfg = ExperimentConfig()
 cfg.model_cfg.dropout = 0.0  # for faster convergence
 model = cfg.make_model().to(device)
 model.eval()
@@ -63,9 +63,7 @@ def finetune_model(project: DeepSVGProject, nb_augmentations=3500):
 
     utils.load_model(pretrained_path, model)
     print("Finetuning...")
-    finetune_dataset = SVGFinetuneDataset(
-        dataset, svgs, frac=1.0, nb_augmentations=nb_augmentations
-    )
+    finetune_dataset = SVGFinetuneDataset(dataset, svgs, frac=1.0, nb_augmentations=nb_augmentations)
     dataloader = DataLoader(
         finetune_dataset,
         batch_size=cfg.batch_size,
@@ -80,7 +78,7 @@ def finetune_model(project: DeepSVGProject, nb_augmentations=3500):
     scheduler_lrs = cfg.make_schedulers(optimizers, epoch_size=len(dataloader))
     scheduler_warmups = cfg.make_warmup_schedulers(optimizers, scheduler_lrs)
 
-    loss_fns = [l.to(device) for l in cfg.make_losses()]
+    loss_fns = [loss.to(device) for loss in cfg.make_losses()]
 
     epoch = 0
     for step, data in enumerate(dataloader):
